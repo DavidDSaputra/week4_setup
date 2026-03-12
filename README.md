@@ -27,7 +27,7 @@ Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-
 3. Masukin nama project
 4. Klik **Continue** sampai project selesai dibuat
 
-<!-- SS dashboard Firebase -->
+![Step 1 - Setup Firebase Project](images/step1(1).png)
 
 ---
 
