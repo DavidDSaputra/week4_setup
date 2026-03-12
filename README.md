@@ -39,7 +39,9 @@ Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-
 4. Aktifin **Email/Password**, klik **Save**
 5. Klik **Add New Provider**, pilih **Google**
 
-<!-- SS sign-in method -->
+![Step 2 - Enable Authentication](images/step2(2).png)
+
+![Step 2 - Sign-in Method](images/step2(3).png)
 
 ---
 
