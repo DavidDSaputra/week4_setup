@@ -60,7 +60,7 @@ Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-
 1. Buka [Postman](https://www.postman.com/downloads/), login atau sign up
 2. Masuk ke dashboard
 
-<!-- SS halaman postman -->
+![Step 4 - Login Postman](images/step4(2).png)
 
 ---
 
