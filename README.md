@@ -140,7 +140,7 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={{FIREBA
 4. Klik **Send**, cek inbox email (cek folder Spam juga)
 5. Klik link verifikasi di email
 
-<!-- SS kirim verifikasi -->
+![Step 7 - Kirim Verifikasi](images/step7(1).png)
 
 ### Ubah Template Email (Opsional)
 
