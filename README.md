@@ -74,7 +74,7 @@ Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-
 |---|---|
 | `FIREBASE_API_KEY` | *(paste API Key dari Firebase)* |
 
-<!-- SS setup environment postman -->
+![Step 5 - Setup Environment Postman](images/step5(1).png)
 
 ---
 
