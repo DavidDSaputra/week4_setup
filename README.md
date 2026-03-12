@@ -51,7 +51,7 @@ Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-
 2. Tab **General**, scroll ke **Your Apps**
 3. Copy **Web API Key** — ini yang dipake di Postman
 
-<!-- SS project settings dan API Key -->
+![Step 3 - Firebase API Key](images/step3(1).png)
 
 ---
 
