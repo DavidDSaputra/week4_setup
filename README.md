@@ -1,14 +1,13 @@
-#  Verify Email dengan Firebase + Postman
+# Verify Email dengan Firebase + Postman
 
 Dokumentasi cara verifikasi email pakai Firebase Authentication dan testing API-nya pakai Postman.
-Ini buat mastiin alur auth Firebase jalan bener sebelum dipasang ke Flutter nanti.
 
 **Nama:** David Saputra
 **NIM:** *1123150039*
 
 ---
 
-##  Daftar Isi
+## Daftar Isi
 
 - [1. Setup Firebase Project](#1-setup-firebase-project)
 - [2. Enable Authentication](#2-enable-authentication)
@@ -23,36 +22,22 @@ Ini buat mastiin alur auth Firebase jalan bener sebelum dipasang ke Flutter nant
 
 ## 1. Setup Firebase Project
 
-Pertama bikin project baru dulu di Firebase Console.
-
 1. Buka [https://console.firebase.google.com](https://console.firebase.google.com)
 2. Klik **Add Project**
-3. Masukin nama project-nya
-4. Klik **Continue** terus sampai project-nya selesai dibuat
+3. Masukin nama project
+4. Klik **Continue** sampai project selesai dibuat
 
-Nanti kalau udah selesai bakal diarahkan ke dashboard Firebase.
-
-
+<!-- SS dashboard Firebase -->
 
 ---
 
 ## 2. Enable Authentication
 
-Sekarang kita aktifin fitur Authentication-nya.
-
-1. Di sidebar Firebase, klik **Build**
-2. Pilih menu **Authentication**
-3. Klik **Get Started**
-
-<!-- SS menu authentication -->
-
-Terus aktifin metode login **Email/Password** sama **Google**:
-
-1. Masuk ke tab **Sign-in Method**
-2. Klik **Email/Password**
-3. Aktifin toggle **Enable**
-4. Klik **Save**
-5. Habis itu klik **Add New Provider**, pilih **Google**
+1. Di sidebar Firebase, klik **Build** > **Authentication**
+2. Klik **Get Started**
+3. Masuk ke tab **Sign-in Method**
+4. Aktifin **Email/Password**, klik **Save**
+5. Klik **Add New Provider**, pilih **Google**
 
 <!-- SS sign-in method -->
 
@@ -60,12 +45,9 @@ Terus aktifin metode login **Email/Password** sama **Google**:
 
 ## 3. Ambil Firebase API Key
 
-Buat pake Firebase API lewat Postman, kita butuh API Key.
-
 1. Klik **Project Settings** (ikon gear di sidebar)
-2. Masuk ke tab **General**
-3. Scroll ke bagian **Your Apps**
-4. Salin nilai **Web API Key** — ini yang bakal dipake di Postman nanti
+2. Tab **General**, scroll ke **Your Apps**
+3. Copy **Web API Key** — ini yang dipake di Postman
 
 <!-- SS project settings dan API Key -->
 
@@ -73,12 +55,8 @@ Buat pake Firebase API lewat Postman, kita butuh API Key.
 
 ## 4. Login ke Postman
 
-Sekarang buka Postman buat testing Firebase REST API.
-
-1. Buka aplikasi **Postman** (download dulu kalau belum punya di [postman.com](https://www.postman.com/downloads/))
-2. Kalau belum punya akun, **Sign Up** dulu
-3. Kalau udah punya, tinggal **Login**
-4. Nanti masuk ke dashboard Postman
+1. Buka [Postman](https://www.postman.com/downloads/), login atau sign up
+2. Masuk ke dashboard
 
 <!-- SS halaman postman -->
 
@@ -86,12 +64,9 @@ Sekarang buka Postman buat testing Firebase REST API.
 
 ## 5. Buat Pengujian Baru di Postman
 
-Setup environment dulu biar gampang.
-
-1. Buat **Folder** baru di bagian **Collection** sama **Environments**
-2. Klik **Environments**
-3. Pilih **Create New**, terus ganti namanya jadi `My Environment`
-4. Isi variabel dan value-nya kayak gini:
+1. Buat **Folder** baru di **Collection** dan **Environments**
+2. Klik **Environments** > **Create New**, rename jadi `My Environment`
+3. Tambah variabel:
 
 | Variable | Value |
 |---|---|
@@ -103,29 +78,21 @@ Setup environment dulu biar gampang.
 
 ## 6. Registrasi User via Firebase REST API
 
-Di tahap ini kita daftarin user baru lewat Firebase Auth API.
-
 **Endpoint:**
 ```
 POST https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={{FIREBASE_API_KEY}}
 ```
 
-Ganti `{{FIREBASE_API_KEY}}` sama API Key yang tadi udah dicopy.
+### Setup Request
 
-### Setup Request di Postman
-
-1. Pilih method **POST**
-2. Masukin URL endpoint di atas
-3. Masuk ke tab **Headers**, tambahin:
+1. Method **POST**, masukin URL di atas
+2. Tab **Headers**:
 
 | Key | Value |
 |---|---|
 | `Content-Type` | `application/json` |
 
-4. Masuk ke tab **Body**
-5. Pilih **Raw**
-6. Pilih format **JSON**
-7. Isi body-nya kayak gini:
+3. Tab **Body** > **Raw** > **JSON**, isi:
 
 ```json
 {
@@ -135,50 +102,29 @@ Ganti `{{FIREBASE_API_KEY}}` sama API Key yang tadi udah dicopy.
 }
 ```
 
-8. Klik tab **Script** supaya `idToken` bisa kesimpen otomatis
+4. Klik tab **Script** biar `idToken` kesimpen otomatis
 
-### Hasil Response
+### Response
 
-**✅ 200 OK — Berhasil**
+- **200 OK** — Registrasi berhasil. Firebase ngirim balik `idToken`, `refreshToken`, dan `expiresIn`.
+- **400 Bad Request** — Gagal. Biasanya karena email udah terdaftar, format salah, atau password kurang dari 6 karakter.
 
-Request berhasil diproses. User udah kebikin dan Firebase ngirim balik response berupa `idToken`, `refreshToken`, sama `expiresIn`. Artinya registrasi sukses.
-
-<!-- SS response berhasil -->
-
-**❌ 400 Bad Request — Gagal**
-
-Kalau gagal, biasanya karena:
-- Email udah terdaftar sebelumnya
-- Format email salah
-- Password terlalu pendek (minimal 6 karakter)
-
-<!-- SS response gagal -->
+<!-- SS response -->
 
 ---
 
 ## 7. Kirim Email Verification
-
-Setelah user berhasil register, sekarang kirim email verifikasi buat mastiin email-nya bener.
 
 **Endpoint:**
 ```
 POST https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={{FIREBASE_API_KEY}}
 ```
 
-### Setup Request di Postman
+### Setup Request
 
-1. Bikin **New Request**
-2. Pilih method **POST**
-3. Masukin endpoint di atas
-4. Masuk ke tab **Headers**, isi:
-
-| Key | Value |
-|---|---|
-| `Content-Type` | `application/json` |
-
-5. Masuk ke tab **Body**
-6. Pilih **Raw**, format **JSON**
-7. Isi body-nya:
+1. Bikin request baru, method **POST**
+2. Header `Content-Type: application/json`
+3. Body **Raw** > **JSON**:
 
 ```json
 {
@@ -187,21 +133,16 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={{FIREBA
 }
 ```
 
-> `idToken` ambil dari response registrasi tadi (atau dari environment kalau udah di-save otomatis).
+> `idToken` ambil dari response registrasi tadi.
 
-8. Klik **Send**, terus cek inbox email. Biasanya masuk ke **Spam**, jadi cek juga folder spam-nya
-9. Klik link verifikasi di email tersebut
+4. Klik **Send**, cek inbox email (cek folder Spam juga)
+5. Klik link verifikasi di email
 
-<!-- SS kirim verifikasi dan email masuk -->
+<!-- SS kirim verifikasi -->
 
 ### Ubah Template Email (Opsional)
 
-Kalau mau custom template email verifikasi-nya:
-
-1. Buka **Firebase Console**
-2. Pilih **Authentication**
-3. Masuk ke tab **Templates**
-4. Edit sesuai keinginan
+Buka **Firebase Console** > **Authentication** > tab **Templates**, edit sesuai kebutuhan.
 
 <!-- SS template email firebase -->
 
@@ -209,21 +150,15 @@ Kalau mau custom template email verifikasi-nya:
 
 ## 8. Cek Status Verifikasi Email
 
-Terakhir, cek apakah email udah ter-verifikasi atau belum.
-
 **Endpoint:**
 ```
 POST https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={{FIREBASE_API_KEY}}
 ```
 
-### Setup Request di Postman
+### Setup Request
 
-1. Bikin **New Request**
-2. Pilih method **POST**
-3. Masukin endpoint di atas
-4. Masuk ke tab **Body**
-5. Pilih **Raw**, format **JSON**
-6. Isi body-nya:
+1. Bikin request baru, method **POST**
+2. Body **Raw** > **JSON**:
 
 ```json
 {
@@ -231,27 +166,8 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={{FIREBASE_AP
 }
 ```
 
-7. Klik **Send**
-8. Cek di response-nya, cari field `emailVerified`
-   - `true` = email udah diverifikasi 
-   - `false` = belum diverifikasi 
+3. Klik **Send**, cek field `emailVerified` di response:
+   - `true` = sudah diverifikasi
+   - `false` = belum diverifikasi
 
 <!-- SS response lookup -->
-
----
-
-## Setup Repository
-
-```bash
-echo "# week4_setup" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/DavidDSaputra/week4_setup.git
-git push -u origin main
-```
-
----
-
-Selesai! Kalau ada yang error atau bingung, coba ulang dari awal dan pastiin API Key-nya bener
