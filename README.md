@@ -111,7 +111,7 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={{FIREBASE_AP
 - **200 OK** — Registrasi berhasil. Firebase ngirim balik `idToken`, `refreshToken`, dan `expiresIn`.
 - **400 Bad Request** — Gagal. Biasanya karena email udah terdaftar, format salah, atau password kurang dari 6 karakter.
 
-<!-- SS response -->
+![Step 6 - Registrasi Response](images/step6(1).png)
 
 ---
 
