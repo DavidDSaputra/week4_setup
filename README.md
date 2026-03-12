@@ -146,7 +146,7 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={{FIREBA
 
 Buka **Firebase Console** > **Authentication** > tab **Templates**, edit sesuai kebutuhan.
 
-<!-- SS template email firebase -->
+
 
 ---
 
@@ -172,4 +172,4 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={{FIREBASE_AP
    - `true` = sudah diverifikasi
    - `false` = belum diverifikasi
 
-<!-- SS response lookup -->
+
